@@ -1,10 +1,13 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import { Box, Stack, Typography } from "@mui/material"
 import { SideBar, Videos } from "./"
+import ThemeContext from "../context/theme";
+import { lightTheme, darkTheme } from "../utils/themes";
 
 import { fetchFromAPI } from "../utils/fetchFromAPI"
 
 const Feed = () => {
+	const { theme } = useContext(ThemeContext);
 	const [selectedCategory, setSelectedCategory] = useState("New");
 	const [videos, setVideos] = useState([]);
 
@@ -45,7 +48,7 @@ const Feed = () => {
 					variant="body2"
 					sx={{
 						mt: 1.5,
-						color: "#fff"
+						color: theme === "light" ? lightTheme.fontColor : darkTheme.fontColor
 					}}
 				>
 					Copyright 2022 blablabla
@@ -53,8 +56,8 @@ const Feed = () => {
 			</Box>
 
 			<Box p={2} sx={{overflowY: "auto", height: "90vh", flex: 2}}>
-				<Typography variant="h4" fontWeight="bold" mb={2} sx={{color: "white"}}>
-					{selectedCategory} <span style={{ color: "#F31503"}}>videos</span>
+				<Typography variant="h4" fontWeight="bold" mb={2} sx={{color: theme === "light" ? lightTheme.fontColor : darkTheme.fontColor}}>
+					{selectedCategory} <span style={{ color: theme === "light" ? lightTheme.primary : darkTheme.primary}}>videos</span>
 				</Typography>
 
 				<Videos videos={videos} />

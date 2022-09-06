@@ -1,12 +1,15 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import { Link, useParams } from "react-router-dom"
 import ReactPlayer from "react-player"
 import { Typography, Box, Stack } from "@mui/material"
 import { CheckCircle } from "@mui/icons-material"
 import { Videos, Loader } from "./"
 import { fetchFromAPI } from "../utils/fetchFromAPI"
+import ThemeContext from "../context/theme"
+import { lightTheme, darkTheme } from "../utils/themes"
 
 const VideoDetail = () => {
+	const { theme } = useContext(ThemeContext);
 	const [videoDetail, setVideoDetail] = useState(null);
 	const [videos, setVideos] = useState(null);
 	const {id} = useParams();
@@ -55,7 +58,12 @@ const VideoDetail = () => {
 							className="react-player" 
 							controls
 						/>
-						<Typography color="#fff" variant="h5" fontWeight="bold" p={2}>
+						<Typography 
+							color={theme === "light" ? lightTheme.fontColor : darkTheme.fontColor} 
+							variant="h5" 
+							fontWeight="bold" 
+							p={2}
+						>
 							{title}
 						</Typography>
 
@@ -63,7 +71,7 @@ const VideoDetail = () => {
 							direction="row"
 							justifyContent="space-between"
 							sx={{
-								color: "#fff"
+								color: theme === "light" ? lightTheme.fontColor : darkTheme.fontColor
 							}}
 							py={1}
 							px={2}
@@ -74,13 +82,13 @@ const VideoDetail = () => {
 										sm: "subtitle1",
 										md: "h6"
 									}}
-									color="#fff"
+									color={theme === "light" ? lightTheme.fontColor : darkTheme.fontColor}
 								>
 									{channelTitle}
 									<CheckCircle
 										sx={{
 											fontSize: "12px",
-											color: "gray",
+											color: theme === "light" ? lightTheme.fontColorLight : darkTheme.fontColorLight,
 											ml: "5px"
 										}}
 									/>

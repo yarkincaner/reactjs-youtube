@@ -1,10 +1,15 @@
+import { useContext } from "react";
 import { Box, CardContent, CardMedia, Typography } from "@mui/material"
 import { CheckCircle } from "@mui/icons-material"
 import { Link } from "react-router-dom"
+import ThemeContext from "../context/theme";
+import { lightTheme, darkTheme } from "../utils/themes";
 
 import { demoProfilePicture } from "../utils/constants"
 
 const ChannelCard = ({ channelDetail, marginTop }) => {
+	const { theme } = useContext(ThemeContext);
+
 	return (
 		<Box
 			sx={{
@@ -29,7 +34,7 @@ const ChannelCard = ({ channelDetail, marginTop }) => {
 						flexDirection: "column",
 						justifyContent: "center",
 						textAlign: "center",
-						color: "#fff"
+						color: theme === "light" ? lightTheme.fontColor : darkTheme.fontColor
 					}}
 				>
 					<CardMedia 
@@ -45,7 +50,7 @@ const ChannelCard = ({ channelDetail, marginTop }) => {
 					/>
 					<Typography variant="h6">
 						{channelDetail?.snippet?.title}
-						<CheckCircle sx={{ fontSize: 14, color: "gray", ml: "5px" }} />
+						<CheckCircle sx={{ fontSize: 14, color: theme === "light" ? lightTheme.fontColorLight : darkTheme.fontColorLight, ml: "5px" }} />
 					</Typography>
 					{
 						channelDetail?.statistics?.subscriberCount && (

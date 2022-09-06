@@ -7,11 +7,20 @@ import {
   ChannelDetail,
   SearchFeed,
 } from "./components";
+import { useContext } from "react";
+import ThemeContext from "./context/theme";
+import { lightTheme, darkTheme } from "./utils/themes";
 
 const App = () => {
+  const { theme } = useContext(ThemeContext);
+
   return (
     <BrowserRouter>
-      <Box sx={{ backgroundColor: "#000" }}>
+      <Box
+        sx={{
+          backgroundColor: theme === "light" ? lightTheme.body : darkTheme.body,
+        }}
+      >
         <Navbar />
         <Routes>
           <Route path="/" exact element={<Feed />} />

@@ -1,6 +1,9 @@
+import { useContext } from "react";
 import { CheckCircle } from "@mui/icons-material"
 import { Typography, Card, CardContent, CardMedia } from "@mui/material"
 import { Link } from "react-router-dom"
+import ThemeContext from "../context/theme";
+import { lightTheme, darkTheme } from "../utils/themes";
 
 import { 
 	demoThumbnailUrl, 
@@ -9,6 +12,7 @@ import {
 } from "../utils/constants"
 
 const VideoCard = ({ video: { id: { videoId }, snippet } }) => {
+	const { theme } = useContext(ThemeContext);
 
 	return (
 		<Card
@@ -37,20 +41,30 @@ const VideoCard = ({ video: { id: { videoId }, snippet } }) => {
 				/>
 				<CardContent 
 					sx={{
-						backgroundColor: "#1e1e1e",
+						backgroundColor: theme === "light" ? lightTheme.body : darkTheme.bodyLight,
 						height: "106px"
 					}}
 				>
 					<Link to={videoId ? `/video/${videoId}` : demoVideoUrl}>
-						<Typography variant="subtitle1" fontWeight="bold" color="#FFF">
+						<Typography variant="subtitle1" fontWeight="bold" color={theme === "light" ? lightTheme.fontColor : darkTheme.fontColor}>
 							{snippet?.title.slice(0, 60) || demoVideoTitle.slice(0, 60)}
 						</Typography>
 					</Link>
 
 					<Link to={snippet?.channelId ? `/channel/${snippet?.channelId}` : demoChannelUrl}>
-						<Typography variant="subtitle2" fontWeight="bold" color="gray">
+						<Typography 
+							variant="subtitle2" 
+							fontWeight="bold" 
+							color={theme === "light" ? lightTheme.fontColorLight : darkTheme.fontColorLight}
+						>
 							{snippet?.channelTitle || demoChannelTitle}
-							<CheckCircle sx={{ fontSize: 12, color: "gray", ml: "5px" }} />
+							<CheckCircle 
+								sx={{ 
+									fontSize: 12, 
+									color: theme === "light" ? lightTheme.fontColorLight : darkTheme.fontColorLight, 
+									ml: "5px" 
+								}} 
+							/>
 						</Typography>
 					</Link>
 				</CardContent>
